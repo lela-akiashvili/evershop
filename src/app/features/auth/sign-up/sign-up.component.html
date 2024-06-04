@@ -1,0 +1,94 @@
+<form action="" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="firstName" class="form-label">First Name</label>
+    <input
+      class="form-control"
+      type="text"
+      id="firstName"
+      formControlName="firstName"
+    />
+    @if (controls.firstName.touched) {
+      @if (controls.firstName.errors?.["maxlength"]) {
+        <div class="text-danger">
+          name is too long! max length is
+          {{ controls.firstName.errors?.["maxlength"]["requiredlength"] }}
+        </div>
+      }
+      @if (controls.firstName.errors?.["required"]) {
+        <div class="text-danger">name is required</div>
+      }
+      @if (controls.firstName.errors?.["badName"]) {
+        <div class="text-danger mt-1">
+          {{ controls.firstName.errors?.["badName"] }}
+        </div>
+      }
+    }
+  </div>
+  <div class="mb-3">
+    <label for="lasttName" class="form-label">Last Name</label>
+    <input
+      class="form-control"
+      type="text"
+      id="lastName"
+      formControlName="lastName"
+    />
+    @if (controls.lastName.touched) {
+      @if (controls.lastName.errors?.["maxlength"]) {
+        <div class="text-danger">
+          lastname is too long! max length is
+          {{ controls.lastName.errors?.["maxlength"]["requiredlength"] }}
+        </div>
+      }
+      @if (controls.lastName.errors?.["required"]) {
+        <div class="text-danger">name is required</div>
+      }
+    }
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">email</label>
+    <input
+      class="form-control"
+      type="email"
+      id="email"
+      formControlName="email"
+    />
+    @if (controls.email.dirty && controls.email.errors) {
+      <div class="mt-1 text-danger">Must be a valid email</div>
+    }
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">password</label>
+    <input
+      class="form-control"
+      type="password"
+      id="password"
+      formControlName="password"
+    />
+    @if (controls.password.dirty && controls.password.errors) {
+      @if (controls.password.errors["minlength"]) {
+        <div class="mt-1 text-danger">password is short</div>
+      }
+    }
+  </div>
+  <div class="mb-3">
+    <label for="confirmPassword" class="form-label">confirm Password</label>
+    <input
+      class="form-control"
+      type="password"
+      id="confirmPassword"
+      formControlName="confirmPassword"
+    />
+    @if (
+      controls.confirmPassword.dirty ||
+        signupForm.errors?.["passwordsMatch"]
+    ) {
+      <div class="mt-1 text-danger">
+        {{ signupForm.errors?.["passwordsMatch"] }}
+      </div>
+    }
+  </div>
+  <button class="btn btn-primary" [disabled]="signupForm.invalid" type="submit">
+    sign up
+  </button>
+  <button class="btn btn-primary" (click)="onAutofill()">Autofill</button>
+</form>
